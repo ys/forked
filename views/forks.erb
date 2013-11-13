@@ -14,7 +14,7 @@
       <tr>
         <td><a href="<%= "https://github.com/#{fork.repo}" %>"><%= fork.repo %></a></td>
         <td><%= fork.stars %></td>
-        <td><%= fork.updated_at %></td>
+        <td><time datetime=" <%= fork.updated_at %>"></time></td>
       </tr>
     <% end %>
   </tbody>
