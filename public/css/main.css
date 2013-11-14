@@ -1,3 +1,10 @@
+header {
+  text-align: center;
+}
+
+header i {
+  margin-bottom: 20px;
+}
 h3 {
   text-align: center;
 }
