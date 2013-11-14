@@ -8,7 +8,7 @@ class GithubRepo
   attr_reader :repo
 
   def initialize(repo)
-    @repo = repo
+    @repo = repo.gsub(' ', '')
   end
 
 
