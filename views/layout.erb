@@ -5,7 +5,6 @@
     <!-- Bootstrap -->
     <link href="/css/main.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <meta name="description" content="Find maintained forks of your favorite repos">
     <link rel="author" href="https://plus.google.com/+YannickSchutz“ rel="me"/>
@@ -22,9 +21,8 @@
     <![endif]-->
   </head>
   <body>
-    <div class='container' style="width: 600px;" >
-      <header class='row' style="padding: 50px 0;">
-        <i class='fa fa-code-fork fa-5x'></i>
+    <div class='container main' >
+      <header class='row' >
         <form>
           <div class="input-group input-group-lg">
             <span class="input-group-addon"><span class="glyphicon glyphicon-book"></span></span>
@@ -48,7 +46,7 @@
     <script>
       $(function(){
         $('time').each(function(i, e) {
-          var time = moment($(e).attr('datetime'));
+          var time = moment.utc($(e).attr('datetime'), "YYYY-MM-DD HH:mm:ss");
           $(e).html(time.fromNow());
           });
         $('form').submit(function(){

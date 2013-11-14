@@ -1,9 +1,9 @@
 header {
   text-align: center;
+  padding: 40px 0;
 }
-
-header i {
-  margin-bottom: 20px;
+.container.main {
+  max-width: 600px;
 }
 h3 {
   text-align: center;
