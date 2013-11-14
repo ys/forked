@@ -11,9 +11,18 @@ class GithubRepo
     @repo = repo
   end
 
+
+  def original
+    current = client.repo(repo)
+    if current.fork?
+      current = current.parent
+    end
+    Repo.new(current.full_name, current.stargazers_count, current.updated_at)
+  end
+
   def popular_forks
     client.forks(repo, sort: 'stargazers').map do |fork|
-      Fork.new(fork.full_name, fork.stargazers_count, fork.updated_at)
+      Repo.new(fork.full_name, fork.stargazers_count, fork.updated_at)
     end
   end
 
@@ -23,7 +32,7 @@ class GithubRepo
   end
 end
 
-Fork = Struct.new(:repo, :stars, :updated_at) do
+Repo = Struct.new(:repo, :stars, :updated_at) do
   def to_json(opts = {})
     { repo: repo, stars: stars, updated_at: updated_at }.to_json
   end
@@ -39,8 +48,9 @@ class App < Sinatra::Base
   get '/:username/:repo' do
     begin
       @repo = "#{params[:username]}/#{params[:repo]}"
-      forks = GithubRepo.new(@repo).popular_forks
-      erb :forks, locals: { forks: forks }
+      original = GithubRepo.new(@repo).original
+      forks = GithubRepo.new(original.repo).popular_forks
+      erb :forks, locals: { original: original, forks: forks }
     rescue Octokit::NotFound
       erb :err400
     end
