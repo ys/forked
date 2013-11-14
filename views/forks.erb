@@ -6,10 +6,15 @@
   <tr>
     <th><span class="glyphicon glyphicon-book"></span></th>
     <th><span class="glyphicon glyphicon-star"></span></th>
-    <th><span class="glyphicon glyphicon-calendar"></span></th>
+    <th><span class="glyphicon glyphicon-calendar"></span>Last update</th>
   </tr>
 </thead>
 <tbody>
+    <tr class="success">
+      <td><a href="<%= "https://github.com/#{original.repo}" %>"><%= original.repo %></a></td>
+      <td><%= original.stars %></td>
+      <td><time datetime=" <%= original.updated_at %>"></time></td>
+    </tr>
     <% forks.each do |fork| %>
       <tr>
         <td><a href="<%= "https://github.com/#{fork.repo}" %>"><%= fork.repo %></a></td>
