@@ -35,6 +35,9 @@ end
 
 class App < Sinatra::Base
   if memcache_servers = ENV["MEMCACHEDCLOUD_SERVERS"]
+    if ENV["MEMCACHEDCLOUD_USERNAME"]
+      memcache_servers = "#{ENV["MEMCACHEDCLOUD_USERNAME"]}:#{ENV["MEMCACHEDCLOUD_PASSWORD"]}@#{memcache_servers}"
+    end
     use Rack::Cache,
       verbose: true,
       metastore:   "memcached://#{memcache_servers}",
