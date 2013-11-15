@@ -2,6 +2,9 @@ require 'sinatra'
 require 'sinatra/json'
 require 'octokit'
 require 'dotenv'
+require 'dalli'
+require 'rack-cache'
+
 Dotenv.load
 
 class GithubRepo
@@ -31,13 +34,21 @@ class GithubRepo
 end
 
 class App < Sinatra::Base
+  if memcache_servers = ENV["MEMCACHEDCLOUD_SERVERS"]
+    use Rack::Cache,
+      verbose: true,
+      metastore:   "memcached://#{memcache_servers}",
+      entitystore: "memcached://#{memcache_servers}"
+  end
   configure do
     set :show_exceptions, false
   end
   get '/' do
+    cache_control :public, max_age: 3600  # 60 mins.
     erb :home
   end
   get '/:username/:repo' do
+    cache_control :public, max_age: 1800  # 30 mins.
     begin
       @repo = "#{params[:username]}/#{params[:repo]}"
       original = GithubRepo.new(@repo).original
