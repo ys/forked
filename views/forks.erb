@@ -15,7 +15,7 @@
         <a href="<%= "https://github.com/#{original.full_name}" %>"><%= original.full_name %></a>
       </td>
       <td><%= original.stargazers_count %></td>
-      <td><time datetime=" <%= original.updated_at %>"></time></td>
+      <td><time datetime=" <%= original.pushed_at %>"></time></td>
     </tr>
     <% forks.each do |fork| %>
       <tr>
@@ -23,7 +23,7 @@
           <a href="<%= "https://github.com/#{fork.full_name}" %>"><%= fork.full_name %></a>
         </td>
         <td><%= fork.stargazers_count %></td>
-        <td><time datetime=" <%= fork.updated_at %>"></time></td>
+        <td><time datetime=" <%= fork.pushed_at %>"></time></td>
       </tr>
     <% end %>
   </tbody>
