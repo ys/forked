@@ -4,6 +4,8 @@ require 'octokit'
 require 'dotenv'
 require 'dalli'
 require 'rack-cache'
+require 'newrelic_rpm'
+
 
 Dotenv.load
 
