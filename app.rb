@@ -34,14 +34,18 @@ class GithubRepo
 end
 
 class App < Sinatra::Base
-  if memcache_servers = ENV["MEMCACHEDCLOUD_SERVERS"]
-    if ENV["MEMCACHEDCLOUD_USERNAME"]
-      memcache_servers = "#{ENV["MEMCACHEDCLOUD_USERNAME"]}:#{ENV["MEMCACHEDCLOUD_PASSWORD"]}@#{memcache_servers}"
-    end
+  if ENV["MEMCACHEDCLOUD_SERVERS"]
+    cache = Dalli::Client.new(ENV["MEMCACHEDCLOUD_SERVERS"].split(","),
+                              {:username => ENV["MEMCACHEDCLOUD_USERNAME"],
+                               :password => ENV["MEMCACHEDCLOUD_PASSWORD"],
+                               :failover => true,
+                               :socket_timeout => 1.5,
+                               :socket_failure_delay => 0.2
+    })
     use Rack::Cache,
       verbose: true,
-      metastore:   "memcached://#{memcache_servers}",
-      entitystore: "memcached://#{memcache_servers}"
+      metastore:   cache,
+      entitystore: cache
   end
   configure do
     set :show_exceptions, false
