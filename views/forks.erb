@@ -5,10 +5,10 @@
   <thead>
     <tr>
       <th><span class="glyphicon glyphicon-book"></span></th>
-      <th><span class="glyphicon glyphicon-star"></span> Stars</th>
-      <th><span class="fa fa-code-fork"></span> Forks</th>
-      <th><span class="fa fa-meh-o"></span> Open Issues</th>
-      <th><span class="glyphicon glyphicon-calendar"></span> Last update</th>
+      <th class="sortable"><span class="glyphicon glyphicon-star"></span> Stars</th>
+      <th class="sortable"><span class="fa fa-code-fork"></span> Forks</th>
+      <th class="sortable"><span class="fa fa-meh-o"></span> Open Issues</th>
+      <th class="sortable"><span class="glyphicon glyphicon-calendar"></span> Last update</th>
     </tr>
     <%= erb :repo, locals: { repo: original, main_repo: true } %>
   </thead>
