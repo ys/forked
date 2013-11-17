@@ -2,29 +2,19 @@
   <h3><span class="glyphicon glyphicon-thumbs-down"></span><%= @repo %> is all but popular!</h3>
 <% else %>
 <table class="table">
-<thead>
-  <tr>
-    <th><span class="glyphicon glyphicon-book"></span></th>
-    <th><span class="glyphicon glyphicon-star"></span></th>
-    <th><span class="glyphicon glyphicon-calendar"></span>Last update</th>
-  </tr>
-</thead>
-<tbody>
-    <tr class="success">
-      <td>
-        <a href="<%= "https://github.com/#{original.full_name}" %>"><%= original.full_name %></a>
-      </td>
-      <td><%= original.stargazers_count %></td>
-      <td><time datetime=" <%= original.pushed_at %>"></time></td>
+  <thead>
+    <tr>
+      <th><span class="glyphicon glyphicon-book"></span></th>
+      <th><span class="glyphicon glyphicon-star"></span> Stars</th>
+      <th><span class="fa fa-code-fork"></span> Forks</th>
+      <th><span class="fa fa-meh-o"></span> Open Issues</th>
+      <th><span class="glyphicon glyphicon-calendar"></span> Last update</th>
     </tr>
+    <%= erb :repo, locals: { repo: original, main_repo: true } %>
+  </thead>
+  <tbody>
     <% forks.each do |fork| %>
-      <tr>
-        <td>
-          <a href="<%= "https://github.com/#{fork.full_name}" %>"><%= fork.full_name %></a>
-        </td>
-        <td><%= fork.stargazers_count %></td>
-        <td><time datetime=" <%= fork.pushed_at %>"></time></td>
-      </tr>
+      <%= erb :repo, locals: { repo: fork, main_repo: false } %>
     <% end %>
   </tbody>
 </table>

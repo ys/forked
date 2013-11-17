@@ -5,6 +5,7 @@
     <!-- Bootstrap -->
     <link href="/css/main.css" rel="stylesheet">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="/images/favicon.png" />
     <meta name="description" content="Find maintained forks of your favorite repos">
     <link rel="author" href="https://plus.google.com/+YannickSchutz“ rel="me"/>
@@ -46,9 +47,15 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/moment.min.js"></script>
-
+    <script src="/js/jquery.tablesorter.min.js"></script>
     <script>
+      var myTextExtraction = function(node)
+      {
+        return $(node).data('value');
+      }
       $(function(){
+          $('table').tablesorter({textExtraction: myTextExtraction,
+            headers: { 0: { sorter: false}, 4: { sorter: 'date'}}});
         $('time').each(function(i, e) {
           var time = moment.utc($(e).attr('datetime'), "YYYY-MM-DD HH:mm:ss");
           $(e).html(time.fromNow());
