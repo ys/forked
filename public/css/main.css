@@ -8,9 +8,6 @@ header {
 th.sortable.headerSortUp::after { content: " \f0dd"; font-family: FontAwesome;}
 th.sortable.headerSortDown::after { content: " \f0de"; font-family: FontAwesome;}
 th.sortable::after { content: " \f0dc"; font-family: FontAwesome;}
-.container.main {
-  max-width: 1200px;
-}
 h3 {
   text-align: center;
 }
