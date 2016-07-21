@@ -2,8 +2,10 @@
   <td data-value="<%= repo.full_name %>">
     <a href="<%= "https://github.com/#{repo.full_name}" %>"><%= repo.full_name %></a>
   </td>
+
   <td data-value="<%= repo.stargazers_count %>"><%= repo.stargazers_count %></td>
   <td data-value="<%= repo.forks_count %>"><%= repo.forks_count %></td>
   <td data-value="<%= repo.open_issues_count %>"><%= repo.open_issues_count %></td>
+  <td data-value="<%= repo.watchers %>"><%= repo.watchers%></td>
   <td data-value="<%= repo.pushed_at %>"><time datetime=" <%= repo.pushed_at %>"></time></td>
 </tr>
