@@ -1,0 +1,21 @@
+version: '2'
+services:
+  db:
+    image: memcached
+  web:
+    build: .
+    command: bundle exec unicorn -p 3000
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      MEMCACHEDCLOUD_SERVERS: db
+      MEMCACHEDCLOUD_USERNAME: ""
+      MEMCACHEDCLOUD_PASSWORD: ""
+      GITHUB_CLIENT_ID: ""
+      GITHUB_CLIENT_SECRET: ""
+      WEB_CONCURRENCY: ""
+
