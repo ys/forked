@@ -5,6 +5,7 @@ require 'newrelic_rpm'
 require 'github_repos'
 require 'dalli'
 require 'rack-cache'
+require 'pry'
 
 Dotenv.load
 
@@ -39,6 +40,8 @@ class App < Sinatra::Base
       @repo = "#{params[:username]}/#{params[:repo]}"
       original = GithubRepos.new(@repo).original
       forks = GithubRepos.new(original.full_name).popular_forks
+      # binding.pry
+      # puts "fork", original
       erb :forks, locals: { original: original, forks: forks }
     rescue Octokit::NotFound
       erb :err400
