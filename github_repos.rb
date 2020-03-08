@@ -26,7 +26,39 @@ class GithubRepos
   end
 end
 
+module Node
+  def children
+    @children ||= []
+  end
+
+  def leaf?
+    children.empty?
+  end
+
+  def leaf_with_hidden?
+    children.empty?
+  end
+
+
+  def <<(child)
+    children << child
+  end
+
+  def inspect(indent = '')
+    indent_step = '    '
+    "#{indent}#{full_name}" +
+      if leaf?
+        forks_count > 0 ? "(#{forks_count})\n#{indent}#{indent_step}...\n" : "\n"
+      else
+        " (#{forks_count})\n" + children.map{|child| child.inspect(indent + indent_step)}.join
+      end
+  end
+
+end
+
+
 class Repo
+  include Node
   attr_reader :octokit_repo
 
   def initialize(octokit_repo)
@@ -49,5 +81,35 @@ class Repo
 
   def method_missing(name, *args, &block)
     octokit_repo.send(name, *args, &block)
+  end
+end
+
+
+module Network
+
+  DEPTH_LIMIT = 2
+
+  class << self
+
+    def build(repo, depth_limit = DEPTH_LIMIT)
+      build_network_for_repo(repo.original, repo.popular_forks, depth_limit)
+    end
+
+    def build_network_for_repo(root_repo, children, depth)
+      unless depth == 0
+        children.each do |repo|
+
+          root_repo <<  if repo.forks_count == 0
+            repo
+          else
+            this_repo_babies = GithubRepos.new(repo.full_name).popular_forks
+            build_network_for_repo(repo, this_repo_babies, depth - 1)
+          end
+
+        end
+      end
+      root_repo
+    end
+
   end
 end
