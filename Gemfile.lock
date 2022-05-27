@@ -21,7 +21,7 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.4)
     public_suffix (3.0.2)
-    rack (1.6.9)
+    rack (1.6.13)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-protection (1.5.1)
